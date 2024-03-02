@@ -623,7 +623,7 @@ local items = {
 }
 
 for _, item in ipairs(items) do
-    local paragraph = Inventory:AddParagraph({
+    local paragraph = Tabs.Inventory:AddParagraph({
         Title = item.name,
         Content = "Status : "
     })
@@ -631,7 +631,13 @@ for _, item in ipairs(items) do
     spawn(function()
         while wait() do
             pcall(function()
-                paragraph:SetDesc(item.name .. " " .. game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path].Frame.Number.Text)
+                local number = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path].Frame.Number.Text
+
+                if number then
+                    paragraph:SetDesc(item.name .. " " .. number)
+                else
+                    paragraph:SetDesc(item.name .. " " .. 0)
+                end
             end)
         end
     end)
