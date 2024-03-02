@@ -600,7 +600,6 @@ end
 
 local Inventory = Tabs.Inventory:AddSection("item")
 
-
 local function AddInventoryCheck(title, itemName, guiPath)
     local paragraph = Inventory:AddParagraph({
         Title = title,
@@ -620,7 +619,7 @@ local function AddInventoryCheck(title, itemName, guiPath)
                 end
 
                 -- Check GUI items
-                local guiItem = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[guiPath]
+                local guiItem = game.Players[game.Players.LocalPlayer.Name].PlayerGui.MainUI.Interface.Inventory.ItemsFrame[guiPath]
                 if guiItem then
                     itemCount = tonumber(guiItem.Frame.Number.Text) or itemCount
                 end
@@ -630,6 +629,7 @@ local function AddInventoryCheck(title, itemName, guiPath)
         end
     end)
 end
+
 
 -- Define items to check with their corresponding GUI paths
 local itemsToCheck = {
