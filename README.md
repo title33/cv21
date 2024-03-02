@@ -632,14 +632,16 @@ for _, item in ipairs(items) do
         while wait() do
             pcall(function()
                 local itemFrame = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path]
-                local statusText = itemFrame and itemFrame.Frame and itemFrame.Frame.Number and itemFrame.Frame.Number.Text or "0"
-                paragraph:SetDesc(item.name .. " " .. statusText)
+                
+                if itemFrame then
+                    paragraph:SetDesc(item.name .. " " .. itemFrame.Frame.Number.Text)
+                else
+                    paragraph:SetDesc(item.name .. " 0") 
+                end
             end)
         end
     end)
 end
-
-
 local Inventory = Tabs.Inventory:AddSection("Swords")
 
 
