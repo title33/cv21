@@ -631,10 +631,9 @@ for _, item in ipairs(items) do
     spawn(function()
         while wait() do
             pcall(function()
-                local numberText = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path].Frame.Number.Text
-                local number = tonumber(numberText) or 0
-
-                paragraph:SetDesc(item.name .. " " .. number)
+                local itemFrame = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path]
+                local statusText = itemFrame and itemFrame.Frame and itemFrame.Frame.Number and itemFrame.Frame.Number.Text or "0"
+                paragraph:SetDesc(item.name .. " " .. statusText)
             end)
         end
     end)
