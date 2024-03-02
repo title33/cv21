@@ -412,6 +412,38 @@ end
 end
     end)
 
+local function SetupItemCheck(tabName, itemName)
+    local ItemParagraph = Tabs.Fruit:AddParagraph({
+        Title = itemName,
+        Content = "Status: "
+    })
+
+    spawn(function()
+        while wait(1) do
+            pcall(function()
+                local itemCount = 0
+                for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if v.Name == itemName then
+                        itemCount = itemCount + 1
+                    end
+                end
+                ItemParagraph:SetDesc(itemName .. " count: " .. itemCount)
+            end)
+        end
+    end)
+end
+
+local itemsToCheck = {
+    "God Light Fruit",
+    "Dark Flame Fruit",
+  
+}
+
+for _, itemName in ipairs(itemsToCheck) do
+    SetupItemCheck(itemName)
+end
+
+
 players = {}
 
 for i, v in pairs(game:GetService("Players"):GetChildren()) do
@@ -600,70 +632,6 @@ end
 
 local Inventory = Tabs.Inventory:AddSection("item")
 
-local function SetupParagraph(tabName, itemName)
-    local Paragraph = Tabs.Stats:AddParagraph({
-        Title = itemName,
-        Content = "Status : "
-    })
-
-    spawn(function()
-        while wait() do
-            pcall(function()
-                local count = 0
-
-                -- Check items in Backpack
-                for _, v in pairs(game.Players[Players.LocalPlayer.Name].Backpack:GetChildren()) do
-                    if v.Name == itemName then
-                        count = count + 1
-                    end
-                end
-
-                -- Check items in ItemsFrame
-                if game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName] then
-                    local frameCount = tonumber(game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName].Frame.Number.Text) or 0
-                    count = math.max(count, frameCount)
-                end
-
-                -- Update Paragraph description
-                Paragraph:SetDesc(itemName .. " : " .. count)
-
-                -- Update GUI frame's number text
-                if game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName] then
-                    game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName].Frame.Number.Text = tostring(count)
-                end
-            end)
-        end
-    end)
-end
-
-
--- Define items to check with their corresponding GUI paths
-local itemsToCheck = {
-    {"God Light Fruit", "God Light Fruit", "1God Light Fruit"},
-    {"Dark Flame Fruit", "Dark Flame Fruit", "1Dark Flame"},
-    {"Four Leaf Clover", "1Four Leaf Clover", "1Four Leaf Clover"},
-    {"Tensa Zangetsu", "1Tensa Zangetsu", "1Tensa Zangetsu"},
-    {"Six Eyes", "1Six Eyes", "1Six Eyes"},
-    {"Busoshoku Haki Book", "2Busoshoku Haki Book", "2Busoshoku Haki Book"},
-    {"Club Card", "2Club Card", "2Club Card"},
-    {"Heart Card", "2Heart Card", "2Heart Card"},
-    {"Diamond Card", "2Diamond Card", "2Diamond Card"},
-    {"Infinity Orb", "2Infinity Orb", "2Infinity Orb"},
-    {"Kenbunshoku Haki Book", "2Kenbunshoku Haki Book", "2Kenbunshoku Haki Book"},
-    {"Lightning Orb", "2Lightning Orb", "2Lightning Orb"},
-    {"Race Reroll", "2Race Reroll", "2Race Reroll"},
-    {"[Choso] Cursed Womb", "2[Choso] Cursed Womb", "2[Choso] Cursed Womb"},
-    {"Fishing Rod", "3Fishing Rod", "3Fishing Rod"},
-    {"Haki Color Reroll", "3Haki Color Reroll", "3Haki Color Reroll"},
-    {"Holy Grail", "3Holy Grail", "3Holy Grail"},
-    {"Sukuna Finger", "3SukunaFinger", "3SukunaFinger"},
-    -- Add more items as needed
-}
-
--- Loop through itemsToCheck and add inventory checks
-for _, itemName in ipairs(itemsToCheck) do
-    SetupParagraph(itemName)
-end
 
 
 local Inventory = Tabs.Inventory:AddSection("Swords")
