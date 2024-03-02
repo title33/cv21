@@ -2,6 +2,7 @@ local ScreenGui = game.CoreGui:FindFirstChild("ScreenGui")
 
 
 if ScreenGui then
+wait(5)
   local ui = ScreenGui:FindFirstChild("ui") or Instance.new("ImageButton", ScreenGui)
   local UICorner = ui:FindFirstChild("UICorner") or Instance.new("UICorner", ui)
 
