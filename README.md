@@ -1,4 +1,4 @@
-local ScreenGui = game.Players.LocalPlayer:WaitForChild("PlayerGui").ScreenGui
+local ScreenGui = game.CoreGui:FindFirstChild("ScreenGui")
 
 
 if ScreenGui then
@@ -19,9 +19,8 @@ if ScreenGui then
 
   UICorner.CornerRadius = UDim.new(0.300000012, 0)
 else
-  print("No UI")
+  print("No Ui")
 end
-
 
 
 
