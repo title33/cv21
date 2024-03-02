@@ -412,37 +412,6 @@ end
 end
     end)
 
-local function SetupItemCheck(itemName)
-    local ItemParagraph = Tabs.Fruit:AddParagraph({
-        Title = itemName,
-        Content = "Status: "
-    })
-
-    spawn(function()
-        while wait(1) do  -- Delay adjusted for clarity
-            pcall(function()
-                local itemCount = 0
-                for _, item in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if item.Name == itemName then
-                        itemCount = itemCount + 1
-                    end
-                end
-                ItemParagraph:SetDesc(itemName .. " count: " .. itemCount)
-            end)
-        end
-    end)
-end
-
-local itemsToCheck = {
-    "God Light Fruit",
-    "Dark Flame Fruit",
-}
-
-for _, itemName in ipairs(itemsToCheck) do
-    SetupItemCheck(itemName) 
-end
-
-
 
 players = {}
 
@@ -632,6 +601,41 @@ end
 
 local Inventory = Tabs.Inventory:AddSection("item")
 
+local items = {
+    { name = "Dark Flame Fruit", path = "1Dark Flame" },
+    { name = "God Light", path = "1GodLight" },
+    { name = "Four Leaf Clover", path = "1Four Leaf Clover" },
+    { name = "Tensa Zangetsu", path = "1Tensa Zangetsu" },
+    { name = "Six Eyes", path = "1Six Eyes" },
+    { name = "Busoshoku Haki Book", path = "2Busoshoku Haki Book" },
+    { name = "Club Card", path = "2Club Card" },
+    { name = "Heart Card", path = "2Heart Card" },
+    { name = "Diamond Card", path = "2Diamond Card" },
+    { name = "Infinity Orb", path = "2Infinity Orb" },
+    { name = "Kenbunshoku Haki Book", path = "2Kenbunshoku Haki Book" },
+    { name = "Lightning Orb", path = "2Lightning Orb" },
+    { name = "Race Reroll", path = "2Race Reroll" },
+    { name = "[Choso] Cursed Womb", path = "2[Choso] Cursed Womb" },
+    { name = "Fishing Rod", path = "3Fishing Rod" },
+    { name = "Haki Color Reroll", path = "3Haki Color Reroll" },
+    { name = "Holy Grail", path = "3Holy Grail" },
+    { name = "Sukuna Finger", path = "3SukunaFinger" },
+}
+
+for _, item in ipairs(items) do
+    local paragraph = Inventory:AddParagraph({
+        Title = item.name,
+        Content = "Status : "
+    })
+
+    spawn(function()
+        while wait() do
+            pcall(function()
+                paragraph:SetDesc(item.name .. " " .. game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[item.path].Frame.Number.Text)
+            end)
+        end
+    end)
+end
 
 
 local Inventory = Tabs.Inventory:AddSection("Swords")
