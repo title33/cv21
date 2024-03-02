@@ -1,27 +1,27 @@
-local ScreenGui = Instance.new("ScreenGui")
-local ui = Instance.new("ImageButton")
-local UICorner = Instance.new("UICorner")
+local ScreenGui = game.Players.LocalPlayer:WaitForChild("PlayerGui").ScreenGui
 
---Properties:
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+if ScreenGui then
+  local ui = ScreenGui:FindFirstChild("ui") or Instance.new("ImageButton", ScreenGui)
+  local UICorner = ui:FindFirstChild("UICorner") or Instance.new("UICorner", ui)
 
-ui.Name = "ui"
-ui.Parent = ScreenGui
-ui.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ui.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ui.BorderSizePixel = 0
-ui.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
-ui.Size = UDim2.new(0, 55, 0, 57)
-ui.Image = "rbxassetid://14491200389"
-ui.MouseButton1Click:Connect(function()
+
+  ui.Name = "ui"
+  ui.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+  ui.BorderColor3 = Color3.fromRGB(0, 0, 0)
+  ui.BorderSizePixel = 0
+  ui.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+  ui.Size = UDim2.new(0, 55, 0, 57)
+  ui.Image = "rbxassetid://14491200389"
+  ui.MouseButton1Click:Connect(function()
     game.CoreGui:FindFirstChild("ScreenGui").Enabled = not game.CoreGui:FindFirstChild("ScreenGui").Enabled
-end)
+  end)
 
+  UICorner.CornerRadius = UDim.new(0.300000012, 0)
+else
+  print("No UI")
+end
 
-UICorner.CornerRadius = UDim.new(0.300000012, 0)
-UICorner.Parent = ui
 
 
 
