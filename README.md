@@ -625,7 +625,7 @@ local items = {
 for _, item in ipairs(items) do
     local paragraph = Inventory:AddParagraph({
         Title = item.name,
-        Content = "Status : "
+        Content = "0"
     })
 
     spawn(function()
