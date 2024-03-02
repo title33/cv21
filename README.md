@@ -600,31 +600,37 @@ end
 
 local Inventory = Tabs.Inventory:AddSection("item")
 
-local function AddInventoryCheck(title, itemName, guiPath)
-    local paragraph = Inventory:AddParagraph({
-        Title = title,
+local function SetupParagraph(tabName, itemName)
+    local Paragraph = Tabs.Stats:AddParagraph({
+        Title = itemName,
         Content = "Status : "
     })
 
     spawn(function()
         while wait() do
             pcall(function()
-                local itemCount = 0
+                local count = 0
 
-                -- Check backpack items
-                for _, item in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if item.Name == itemName then
-                        itemCount = itemCount + 1
+                -- Check items in Backpack
+                for _, v in pairs(game.Players[Players.LocalPlayer.Name].Backpack:GetChildren()) do
+                    if v.Name == itemName then
+                        count = count + 1
                     end
                 end
 
-                -- Check GUI items
-                local guiItem = game.Players[game.Players.LocalPlayer.Name].PlayerGui.MainUI.Interface.Inventory.ItemsFrame[guiPath]
-                if guiItem then
-                    itemCount = tonumber(guiItem.Frame.Number.Text) or itemCount
+                -- Check items in ItemsFrame
+                if game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName] then
+                    local frameCount = tonumber(game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName].Frame.Number.Text) or 0
+                    count = math.max(count, frameCount)
                 end
 
-                paragraph:SetDesc(title .. " : " .. itemCount)
+                -- Update Paragraph description
+                Paragraph:SetDesc(itemName .. " : " .. count)
+
+                -- Update GUI frame's number text
+                if game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName] then
+                    game.Players.LocalPlayer.PlayerGui.MainUI.Interface.Inventory.ItemsFrame[itemName].Frame.Number.Text = tostring(count)
+                end
             end)
         end
     end)
@@ -655,10 +661,9 @@ local itemsToCheck = {
 }
 
 -- Loop through itemsToCheck and add inventory checks
-for _, itemInfo in ipairs(itemsToCheck) do
-    AddInventoryCheck(unpack(itemInfo))
+for _, itemName in ipairs(itemsToCheck) do
+    SetupParagraph(itemName)
 end
-
 
 
 local Inventory = Tabs.Inventory:AddSection("Swords")
