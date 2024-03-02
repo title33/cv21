@@ -412,18 +412,18 @@ end
 end
     end)
 
-local function SetupItemCheck(tabName, itemName)
+local function SetupItemCheck(itemName)
     local ItemParagraph = Tabs.Fruit:AddParagraph({
         Title = itemName,
         Content = "Status: "
     })
 
     spawn(function()
-        while wait(1) do
+        while wait(1) do  -- Delay adjusted for clarity
             pcall(function()
                 local itemCount = 0
-                for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-                    if v.Name == itemName then
+                for _, item in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if item.Name == itemName then
                         itemCount = itemCount + 1
                     end
                 end
@@ -436,12 +436,12 @@ end
 local itemsToCheck = {
     "God Light Fruit",
     "Dark Flame Fruit",
-  
 }
 
 for _, itemName in ipairs(itemsToCheck) do
-    SetupItemCheck(itemName)
+    SetupItemCheck(itemName) 
 end
+
 
 
 players = {}
